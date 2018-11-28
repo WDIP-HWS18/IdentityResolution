@@ -9,6 +9,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.Mu
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MusicBlockingKeyByArtistNameGenerator;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Music;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.MusicXMLReader;
+import de.uni_mannheim.informatik.dws.winter.datafusion.CorrespondenceSet;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEngine;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEvaluator;
 import de.uni_mannheim.informatik.dws.winter.matching.algorithms.RuleLearner;
@@ -71,6 +72,7 @@ public class IR_using_machine_learning_lyrics_songdata {
         matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicArtistNameComparatorJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
+        matchingRule.addComparator(new MusicArtistNameComparatorJaccardOnTrigrams());
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();

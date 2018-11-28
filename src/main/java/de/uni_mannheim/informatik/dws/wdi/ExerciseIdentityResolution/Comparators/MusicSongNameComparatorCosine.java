@@ -19,9 +19,10 @@ import de.uni_mannheim.informatik.dws.winter.model.Matchable;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.similarity.EqualsSimilarity;
 import de.uni_mannheim.informatik.dws.winter.similarity.string.LevenshteinSimilarity;
-import info.debatty.java.stringsimilarity.*;
-
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Music;
+import info.debatty.java.stringsimilarity.*;
+import 
+
 
 /**
  * {@link Comparator} for {@link Music}s based on the {@link Music#getTitle()}
@@ -30,10 +31,10 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Music
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class MusicSongNameComparatorLowerCaseJaccard implements Comparator<Music, Attribute> {
+public class MusicSongNameComparatorJaroWinkler1 implements Comparator<Music, Attribute> {
 
 	private static final long serialVersionUID = 1L;
-	private EqualsSimilarity<String> sim = new EqualsSimilarity<String>();
+	private JaroWinkler sim = new JaroWinkler();
 	
 	private ComparatorLogger comparisonLog;
 
@@ -46,7 +47,7 @@ public class MusicSongNameComparatorLowerCaseJaccard implements Comparator<Music
     	String s1 = record1.getSongName();
 		String s2 = record2.getSongName();
     	
-		double similarity = sim.calculate(s1, s2);
+    	double similarity = sim.similarity(s1, s2);
     	
 		if(this.comparisonLog != null){
 			this.comparisonLog.setComparatorName(getClass().getName());
