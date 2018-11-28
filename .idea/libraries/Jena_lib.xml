@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Jena_lib">
+    <CLASSES>
+      <root url="file://D:/下载的软件/JAVA/apache-jena-3.9.0/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/下载的软件/JAVA/apache-jena-3.9.0/lib" recursive="false" />
+  </library>
+</component>
