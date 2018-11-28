@@ -38,6 +38,12 @@ public class IR_using_machine_learning_lyrics_sparql {
      *     private static final Logger logger = WinterLogManager.activateLogger("traceFile");
      *
      */
+    
+    // lyrics <-> sparql
+    // Precision: 1.0000
+    // Recall: 0.9200
+    // F1: 0.9583
+    // found 355 correspondences
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
 

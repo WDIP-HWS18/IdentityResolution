@@ -39,6 +39,13 @@ public class IR_using_machine_learning_lyrics_songdata {
      *
      */
 
+    //3,846 correspondences
+    //lyrics <-> songdata
+    //Precision: 1.0000
+    //Recall: 0.9889
+    //F1: 0.9944
+    //found 3,846 correspondences
+    
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
     public static void main( String[] args ) throws Exception

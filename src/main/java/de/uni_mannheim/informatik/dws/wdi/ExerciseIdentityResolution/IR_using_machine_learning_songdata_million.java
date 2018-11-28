@@ -39,6 +39,13 @@ public class IR_using_machine_learning_songdata_million {
      *
      */
 
+    // songdata <-> million
+    // Precision: 1.0000
+    // Recall: 0.9889
+    // F1: 0.9944
+    // found 400 correspondences
+    
+
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
     public static void main( String[] args ) throws Exception
