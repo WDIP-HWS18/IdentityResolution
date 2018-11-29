@@ -63,13 +63,23 @@ public class IR_using_machine_learning_million_sparql {
         matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000);
 
         // add comparators
+        matchingRule.addComparator(new MusicArtistNameComparatorCosine());
+        matchingRule.addComparator(new MusicArtistNameComparatorEqualSimilarity());
+        matchingRule.addComparator(new MusicArtistNameComparatorJaccard());
+        matchingRule.addComparator(new MusicArtistNameComparatorJaroWinkler());
+        matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
+        matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
+        matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
+        matchingRule.addComparator(new MusicDateComparator10Years());
+        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
+        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
+        matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());
+        matchingRule.addComparator(new MusicSongNameComparatorJaroWinkler());
         matchingRule.addComparator(new MusicSongNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicSongNameComparatorLowerCaseJaccard());
-        matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
-        matchingRule.addComparator(new MusicArtistNameComparatorJaccard());
-        matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
+        matchingRule.addComparator(new MusicSongNameComparatorTrigrams());
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
