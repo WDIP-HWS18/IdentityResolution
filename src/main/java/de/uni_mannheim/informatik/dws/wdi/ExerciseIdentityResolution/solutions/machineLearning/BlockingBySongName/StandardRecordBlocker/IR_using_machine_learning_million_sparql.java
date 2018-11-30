@@ -86,7 +86,7 @@ public class IR_using_machine_learning_million_sparql {
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs2_million_sparql_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_million_sparql_train.csv"));
 
         // train the matching rule's model
         System.out.println("*\n*\tLearning matching rule\n*");
@@ -114,7 +114,7 @@ public class IR_using_machine_learning_million_sparql {
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/gs2_million_sparql_test.csv"));
+                "data/goldstandard/gs_million_sparql_test.csv"));
 
         // evaluate your result
         System.out.println("*\n*\tEvaluating result\n*");

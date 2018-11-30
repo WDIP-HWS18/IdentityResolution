@@ -1,4 +1,4 @@
-package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution;
+package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.linearCombination;
 
 import java.io.File;
 
@@ -7,9 +7,7 @@ import org.apache.logging.log4j.Logger;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MusicBlockingKeyByArtistNameGenerator;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MusicBlockingKeyBySongNameGenerator;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongNameComparatorJaccard;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongGenreComparatorJaccard;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongNameComparatorLevenshtein;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicDateComparator10Years;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongNameComparatorEqual;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicArtistNameComparatorLevenshtein;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicArtistNameComparatorJaccard;
@@ -29,8 +27,9 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.ErrorAnalysis2;
 
-public class IR_using_linear_combination
+public class IR_using_linear_combination_songdata_lyrics
 {
     /*
      * Logging Options:
@@ -52,17 +51,17 @@ public class IR_using_linear_combination
         // loading data
         System.out.println("*\n*\tLoading datasets\n*");
         HashedDataSet<Music, Attribute> dataSong = new HashedDataSet<>();
-        new MusicXMLReader().loadFromXML(new File("data/input/million14.xml"), "/music/music", dataSong);
+        new MusicXMLReader().loadFromXML(new File("data/input/songdata.xml"), "/music/music", dataSong);
         HashedDataSet<Music, Attribute> dataArtist = new HashedDataSet<>();
-        new MusicXMLReader().loadFromXML(new File("data/input/SPARQL78.xml"), "/music/music", dataArtist);
+        new MusicXMLReader().loadFromXML(new File("data/input/lyrics14.xml"), "/music/music", dataArtist);
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/python/gs_million_sparql_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/python/gs_lyrics_songdata_train.csv"));
 
         // create a matching rule
         LinearCombinationMatchingRule<Music, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
-                0.8);
+                0.7);
         matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", -1, gsTraining);
 
         // add comparators
@@ -96,13 +95,13 @@ public class IR_using_linear_combination
         // correspondences = maxWeight.getResult();
 
         // write the correspondences to the output file
-        new CSVCorrespondenceFormatter().writeCSV(new File("data/output/million_sparql_correspondences.csv"), correspondences);
+        new CSVCorrespondenceFormatter().writeCSV(new File("data/output/songdata_lyrics_correspondences.csv"), correspondences);
 
         // load the gold standard (test set)
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/python/gs_million_sparql_test.csv"));
+                "data/goldstandard/python/gs_lyrics_songdata_test.csv"));
 
         System.out.println("*\n*\tEvaluating result\n*");
         // evaluate your result
@@ -111,12 +110,16 @@ public class IR_using_linear_combination
                 gsTest);
 
         // print the evaluation result
-        System.out.println("million <-> sparql");
+        System.out.println("songdata <-> lyrics (IR_using_linear_combination_songdata_lyrics)");
         System.out.println(String.format(
                 "Precision: %.4f",perfTest.getPrecision()));
         System.out.println(String.format(
                 "Recall: %.4f",	perfTest.getRecall()));
         System.out.println(String.format(
                 "F1: %.4f",perfTest.getF1()));
+   //     ErrorAnalysis2 eAnalysis = new ErrorAnalysis2();
+     //   eAnalysis.printFalseNegatives(dataSong, dataArtist, correspondences, gsTest);
+       // eAnalysis.printFalsePositives(correspondences, gsTest);
+       
     }
 }

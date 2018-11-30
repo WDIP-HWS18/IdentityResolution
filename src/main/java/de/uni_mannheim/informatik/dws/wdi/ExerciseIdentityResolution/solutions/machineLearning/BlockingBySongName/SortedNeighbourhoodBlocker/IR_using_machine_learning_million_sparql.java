@@ -59,7 +59,7 @@ public class IR_using_machine_learning_million_sparql {
         // create a matching rule
         String options[] = new String[] { "-S" };
         String modelType = "SimpleLogistic"; // use a logistic regression
-        WekaMatchingRule<Music, Attribute> matchingRule = new WekaMatchingRule<>(0.5, modelType, options);
+        WekaMatchingRule<Music, Attribute> matchingRule = new WekaMatchingRule<>(0.7, modelType, options);
         matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000);
 
         // add comparators
@@ -67,16 +67,17 @@ public class IR_using_machine_learning_million_sparql {
         matchingRule.addComparator(new MusicArtistNameComparatorEqualSimilarity());
         matchingRule.addComparator(new MusicArtistNameComparatorJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorJaroWinkler());
-        matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
-        matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
+        //matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
+        //matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());
         matchingRule.addComparator(new MusicSongNameComparatorJaroWinkler());
-        matchingRule.addComparator(new MusicSongNameComparatorLevenshtein());
-        matchingRule.addComparator(new MusicSongNameComparatorLowerCaseJaccard());
+        //matchingRule.addComparator(new MusicSongNameComparatorLevenshtein());
+        //matchingRule.addComparator(new MusicSongNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicSongNameComparatorTrigrams());
+
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
@@ -89,7 +90,7 @@ public class IR_using_machine_learning_million_sparql {
         System.out.println(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
 
         // create a blocker (blocking strategy)
-        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 12);
+        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 20);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine

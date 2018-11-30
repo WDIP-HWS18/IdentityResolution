@@ -60,7 +60,7 @@ public class IR_using_machine_learning_songdata_sparql {
         // create a matching rule
         String options[] = new String[] { "-S" };
         String modelType = "SimpleLogistic"; // use a logistic regression
-        WekaMatchingRule<Music, Attribute> matchingRule = new WekaMatchingRule<>(0.5, modelType, options);
+        WekaMatchingRule<Music, Attribute> matchingRule = new WekaMatchingRule<>(0.7, modelType, options);
         matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000);
 
         // add comparators
@@ -81,7 +81,7 @@ public class IR_using_machine_learning_songdata_sparql {
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_songdata_sparql_training.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_songdata_sparql_train.csv"));
 
         // train the matching rule's model
         System.out.println("*\n*\tLearning matching rule\n*");
@@ -90,7 +90,7 @@ public class IR_using_machine_learning_songdata_sparql {
         System.out.println(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
 
         // create a blocker (blocking strategy)
-        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 12);
+        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 20);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine
@@ -109,7 +109,7 @@ public class IR_using_machine_learning_songdata_sparql {
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/gs_songdata_sparql_testing.csv"));
+                "data/goldstandard/gs_songdata_sparql_test.csv"));
 
         // evaluate your result
         System.out.println("*\n*\tEvaluating result\n*");

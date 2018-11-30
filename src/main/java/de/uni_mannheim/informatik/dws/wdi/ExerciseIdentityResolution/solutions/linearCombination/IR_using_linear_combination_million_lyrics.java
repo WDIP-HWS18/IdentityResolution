@@ -1,20 +1,25 @@
-package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution;
+package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.linearCombination;
 
 import java.io.File;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.*;
 import org.apache.logging.log4j.Logger;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MusicBlockingKeyBySongNameGenerator;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.ErrorAnalysis2;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MusicBlockingKeyByArtistNameGenerator;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MusicBlockingKeyBySongNameGenerator;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongNameComparatorJaccard;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongNameComparatorLevenshtein;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicSongNameComparatorEqual;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicArtistNameComparatorLevenshtein;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MusicArtistNameComparatorJaccard;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Music;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.MusicXMLReader;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEngine;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEvaluator;
-import de.uni_mannheim.informatik.dws.winter.matching.algorithms.RuleLearner;
-import de.uni_mannheim.informatik.dws.winter.matching.blockers.SortedNeighbourhoodBlocker;
+import de.uni_mannheim.informatik.dws.winter.matching.algorithms.MaximumBipartiteMatchingAlgorithm;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.StandardRecordBlocker;
-import de.uni_mannheim.informatik.dws.winter.matching.rules.WekaMatchingRule;
+import de.uni_mannheim.informatik.dws.winter.matching.blockers.SortedNeighbourhoodBlocker;
+import de.uni_mannheim.informatik.dws.winter.matching.rules.LinearCombinationMatchingRule;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.HashedDataSet;
 import de.uni_mannheim.informatik.dws.winter.model.MatchingGoldStandard;
@@ -24,8 +29,8 @@ import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
 
-public class IR_using_machine_learning_million_sparql {
-
+public class IR_using_linear_combination_million_lyrics
+{
     /*
      * Logging Options:
      * 		default: 	level INFO	- console
@@ -38,12 +43,6 @@ public class IR_using_machine_learning_million_sparql {
      *     private static final Logger logger = WinterLogManager.activateLogger("traceFile");
      *
      */
-    
-    // million <-> sparql
-    // Precision: 1.0000
-    // Recall: 0.9888
-    // F1: 0.9944
-    // found 1,094 correspondences
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
@@ -54,46 +53,28 @@ public class IR_using_machine_learning_million_sparql {
         HashedDataSet<Music, Attribute> dataSong = new HashedDataSet<>();
         new MusicXMLReader().loadFromXML(new File("data/input/million14.xml"), "/music/music", dataSong);
         HashedDataSet<Music, Attribute> dataArtist = new HashedDataSet<>();
-        new MusicXMLReader().loadFromXML(new File("data/input/SPARQL78.xml"), "/music/music", dataArtist);
-
-        // create a matching rule
-        String options[] = new String[] { "-S" };
-        String modelType = "SimpleLogistic"; // use a logistic regression
-        WekaMatchingRule<Music, Attribute> matchingRule = new WekaMatchingRule<>(0.7, modelType, options);
-        matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000);
-
-        // add comparators
-        matchingRule.addComparator(new MusicArtistNameComparatorCosine());
-        matchingRule.addComparator(new MusicArtistNameComparatorEqualSimilarity());
-        matchingRule.addComparator(new MusicArtistNameComparatorJaccard());
-        matchingRule.addComparator(new MusicArtistNameComparatorJaroWinkler());
-        matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
-        matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
-        matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
-        matchingRule.addComparator(new MusicDateComparator10Years());
-        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
-        matchingRule.addComparator(new MusicSongNameComparatorCosine());
-        matchingRule.addComparator(new MusicSongNameComparatorEqual());
-        matchingRule.addComparator(new MusicSongNameComparatorJaccard());
-        matchingRule.addComparator(new MusicSongNameComparatorJaroWinkler());
-        matchingRule.addComparator(new MusicSongNameComparatorLevenshtein());
-        matchingRule.addComparator(new MusicSongNameComparatorLowerCaseJaccard());
-        matchingRule.addComparator(new MusicSongNameComparatorTrigrams());
+        new MusicXMLReader().loadFromXML(new File("data/input/lyrics14.xml"), "/music/music", dataArtist);
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_million_sparql_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/python/gs_million_lyrics_train.csv"));
 
-        // train the matching rule's model
-        System.out.println("*\n*\tLearning matching rule\n*");
-        RuleLearner<Music, Attribute> learner = new RuleLearner<>();
-        learner.learnMatchingRule(dataSong, dataArtist, null, matchingRule, gsTraining);
-        System.out.println(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
+        // create a matching rule
+        LinearCombinationMatchingRule<Music, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
+                0.7);
+        matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", -1, gsTraining);
 
+        // add comparators
+        matchingRule.addComparator(new MusicSongNameComparatorJaccard(), 0.4);
+        matchingRule.addComparator(new MusicArtistNameComparatorJaccard(), 0.6);
+      //  matchingRule.addComparator(new MusicDateComparator10Years(), 1.0);
+      //  matchingRule.addComparator(new MusicSongGenreComparatorJaccard(), 0.4);
         // create a blocker (blocking strategy)
         StandardRecordBlocker<Music, Attribute> blocker = new StandardRecordBlocker<Music, Attribute>(new MusicBlockingKeyBySongNameGenerator());
-//		SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 1);
+//		NoBlocker<Music, Attribute> blocker = new NoBlocker<>();
+	//	SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 1);
+        blocker.setMeasureBlockSizes(true);
+        //Write debug results to file:
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine
@@ -105,28 +86,40 @@ public class IR_using_machine_learning_million_sparql {
                 dataSong, dataArtist, null, matchingRule,
                 blocker);
 
+        // Create a top-1 global matching
+        //  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.0);
+
+        // Alternative: Create a maximum-weight, bipartite matching
+        // MaximumBipartiteMatchingAlgorithm<Music,Attribute> maxWeight = new MaximumBipartiteMatchingAlgorithm<>(correspondences);
+        // maxWeight.run();
+        // correspondences = maxWeight.getResult();
+
         // write the correspondences to the output file
-        new CSVCorrespondenceFormatter().writeCSV(new File("data/output/million_sparql_correspondences_machine_learning.csv"), correspondences);
+        new CSVCorrespondenceFormatter().writeCSV(new File("data/output/million_lyrics_correspondences.csv"), correspondences);
 
         // load the gold standard (test set)
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/gs_million_sparql_test.csv"));
+                "data/goldstandard/python/gs_million_lyrics_test.csv"));
 
-        // evaluate your result
         System.out.println("*\n*\tEvaluating result\n*");
+        // evaluate your result
         MatchingEvaluator<Music, Attribute> evaluator = new MatchingEvaluator<Music, Attribute>();
         Performance perfTest = evaluator.evaluateMatching(correspondences,
                 gsTest);
 
         // print the evaluation result
-        System.out.println("million <-> sparql");
+        System.out.println("million <-> sparql (IR_using_linear_combination_million_lyrics)");
         System.out.println(String.format(
                 "Precision: %.4f",perfTest.getPrecision()));
         System.out.println(String.format(
                 "Recall: %.4f",	perfTest.getRecall()));
         System.out.println(String.format(
                 "F1: %.4f",perfTest.getF1()));
+        
+        ErrorAnalysis2 error = new ErrorAnalysis2();
+        error.printFalseNegatives(dataSong, dataArtist, correspondences, gsTest);
+        error.printFalsePositives(correspondences, gsTest);
     }
 }
