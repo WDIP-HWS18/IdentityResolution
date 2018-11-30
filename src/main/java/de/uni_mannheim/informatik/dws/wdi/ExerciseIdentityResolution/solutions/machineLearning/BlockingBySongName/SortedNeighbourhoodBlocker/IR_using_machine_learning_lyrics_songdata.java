@@ -73,8 +73,6 @@ public class IR_using_machine_learning_lyrics_songdata {
         matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
-        //matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        //matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());
@@ -94,7 +92,7 @@ public class IR_using_machine_learning_lyrics_songdata {
         System.out.println(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
 
         // create a blocker (blocking strategy)
-        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 12);
+        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyBySongNameGenerator(), 20);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine

@@ -42,10 +42,11 @@ public class IR_using_machine_learning_lyrics_songdata {
 
     //3,846 correspondences
     //lyrics <-> songdata
-    //Precision: 1.0000
-    //Recall: 0.9889
-    //F1: 0.9944
-    //found 3,846 correspondences
+    //Precision: 0
+    //Recall: 0
+    //F1: 0
+    //correspondences: 0
+    //window size: 1
     
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
@@ -95,7 +96,7 @@ public class IR_using_machine_learning_lyrics_songdata {
 
         // create a blocker (blocking strategy)
         // With any window-size higher than 1 there is nothing happening and 1 return results which are way too low
-        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 2);
+        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 1);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine

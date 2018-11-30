@@ -74,8 +74,6 @@ public class IR_using_machine_learning_lyrics_songdata {
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
         matchingRule.addComparator(new MusicDateComparator10Years());
-        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());

@@ -40,10 +40,10 @@ public class IR_using_machine_learning_million_lyrics {
      */
     
     // million <-> lyrics
-    // Precision: 1.0000
-    // Recall: 0.9888
-    // F1: 0.9944
-    // found 1,035 correspondences
+    // Precision: -
+    // Recall: -
+    // F1: -
+    // correspondences: -
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
@@ -70,8 +70,6 @@ public class IR_using_machine_learning_million_lyrics {
         matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
-        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());
@@ -91,7 +89,7 @@ public class IR_using_machine_learning_million_lyrics {
         System.out.println(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
 
         // create a blocker (blocking strategy)
-        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 12);
+        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 2);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine

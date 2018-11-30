@@ -2,6 +2,72 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - IR_using_machine_learning_lyrics_songdata",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.machineLearning.BlockingBySongName.SortedNeighbourhoodBlocker.IR_using_machine_learning_lyrics_songdata",
+            "args": "",
+            "projectName": "ExerciseIdentityResolution"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - IR_using_machine_learning_million_sparql",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.machineLearning.BlockingBySongName.SortedNeighbourhoodBlocker.IR_using_machine_learning_million_sparql",
+            "args": "",
+            "projectName": "ExerciseIdentityResolution"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - IR_using_machine_learning_million_sparql",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.machineLearning.BlockingBySongName.StandardRecordBlocker.IR_using_machine_learning_million_sparql",
+            "args": "",
+            "projectName": "ExerciseIdentityResolution"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - IR_using_machine_learning_songdata_sparql",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.machineLearning.BlockingBySongName.SortedNeighbourhoodBlocker.IR_using_machine_learning_songdata_sparql",
+            "args": "",
+            "projectName": "ExerciseIdentityResolution"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - IR_using_machine_learning_lyrics_songdata",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.machineLearning.BlockingByArtistName.StandardRecordBlocker.IR_using_machine_learning_lyrics_songdata",
+            "args": "",
+            "projectName": "ExerciseIdentityResolution"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - IR_using_machine_learning_million_lyrics",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions.machineLearning.BlockingByArtistName.SortedNeighbourhoodBlocker.IR_using_machine_learning_million_lyrics",
+            "args": "",
+            "projectName": "ExerciseIdentityResolution"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - IR_using_machine_learning_lyrics_sparql",
             "request": "launch",
             "cwd": "${workspaceFolder}",

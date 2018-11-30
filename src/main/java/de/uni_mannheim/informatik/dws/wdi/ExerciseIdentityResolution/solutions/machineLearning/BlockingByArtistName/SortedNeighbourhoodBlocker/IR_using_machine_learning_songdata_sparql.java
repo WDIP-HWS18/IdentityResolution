@@ -40,10 +40,10 @@ public class IR_using_machine_learning_songdata_sparql {
      */
     
     // songdata <-> sparql
-    // Precision: 0.0000
-    // Recall: 0.0000
-    // F1: 0.0000
-    // 1,506 correspondences
+    // Precision: -
+    // Recall: -
+    // F1: -
+    // correspondences: -
 
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
@@ -71,8 +71,6 @@ public class IR_using_machine_learning_songdata_sparql {
         matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
-        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());

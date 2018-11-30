@@ -40,10 +40,10 @@ public class IR_using_machine_learning_million_sparql {
      */
     
     // million <-> sparql
-    // Precision: 1.0000
-    // Recall: 0.9888
-    // F1: 0.9944
-    // found 1,094 correspondences
+    // Precision: -
+    // Recall: -
+    // F1: -
+    // correspondences: -
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
@@ -70,8 +70,6 @@ public class IR_using_machine_learning_million_sparql {
         matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
-        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());

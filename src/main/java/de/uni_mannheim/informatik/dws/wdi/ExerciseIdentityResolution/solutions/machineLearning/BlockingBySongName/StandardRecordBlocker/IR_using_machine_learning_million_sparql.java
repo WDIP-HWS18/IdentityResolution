@@ -40,9 +40,15 @@ public class IR_using_machine_learning_million_sparql {
      */
     
     // million <-> sparql
+    // g1
     // Precision: 1.0000
     // Recall: 0.9888
     // F1: 0.9944
+    // found 1,094 correspondences
+    // g2
+    // Precision: 165
+    // Recall: 0.1429
+    // F1: 0.25
     // found 1,094 correspondences
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
@@ -70,8 +76,6 @@ public class IR_using_machine_learning_million_sparql {
         matchingRule.addComparator(new MusicArtistNameComparatorLevenshtein());
         matchingRule.addComparator(new MusicArtistNameComparatorLowerCaseJaccard());
         matchingRule.addComparator(new MusicArtistNameComparatorTrigrams());
-        matchingRule.addComparator(new MusicDateComparatorDeviationSimilarity());
-        matchingRule.addComparator(new MusicDateComparatorNormalisedNumericSimilarity());
         matchingRule.addComparator(new MusicSongNameComparatorCosine());
         matchingRule.addComparator(new MusicSongNameComparatorEqual());
         matchingRule.addComparator(new MusicSongNameComparatorJaccard());
@@ -82,7 +86,7 @@ public class IR_using_machine_learning_million_sparql {
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_million_sparql_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs2_million_sparql_train.csv"));
 
         // train the matching rule's model
         System.out.println("*\n*\tLearning matching rule\n*");
@@ -92,7 +96,6 @@ public class IR_using_machine_learning_million_sparql {
 
         // create a blocker (blocking strategy)
         StandardRecordBlocker<Music, Attribute> blocker = new StandardRecordBlocker<Music, Attribute>(new MusicBlockingKeyBySongNameGenerator());
-//		SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 1);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine
@@ -111,7 +114,7 @@ public class IR_using_machine_learning_million_sparql {
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/gs_million_sparql_test.csv"));
+                "data/goldstandard/gs2_million_sparql_test.csv"));
 
         // evaluate your result
         System.out.println("*\n*\tEvaluating result\n*");

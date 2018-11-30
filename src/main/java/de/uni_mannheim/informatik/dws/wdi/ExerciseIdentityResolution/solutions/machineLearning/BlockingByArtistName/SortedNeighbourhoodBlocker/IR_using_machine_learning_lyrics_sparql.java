@@ -40,10 +40,11 @@ public class IR_using_machine_learning_lyrics_sparql {
      */
     
     // lyrics <-> sparql
-    // Precision: 1.0000
-    // Recall: 0.9200
-    // F1: 0.9583
-    // found 355 correspondences
+    // Precision: 0
+    // Recall: 0
+    // F1: 0
+    // correspondences: 0
+    // window size = 5
 
     private static final Logger logger = WinterLogManager.activateLogger("default");
 
@@ -89,7 +90,7 @@ public class IR_using_machine_learning_lyrics_sparql {
         System.out.println(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
 
         // create a blocker (blocking strategy)
-        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 2);
+        SortedNeighbourhoodBlocker<Music, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MusicBlockingKeyByArtistNameGenerator(), 5);
         blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
 
         // Initialize Matching Engine
