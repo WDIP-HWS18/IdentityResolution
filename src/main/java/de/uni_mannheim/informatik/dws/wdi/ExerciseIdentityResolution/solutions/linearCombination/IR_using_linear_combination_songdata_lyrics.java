@@ -57,7 +57,7 @@ public class IR_using_linear_combination_songdata_lyrics
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/python/gs_lyrics_songdata_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_lyrics_songdata_train.csv"));
 
         // create a matching rule
         LinearCombinationMatchingRule<Music, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
@@ -101,7 +101,7 @@ public class IR_using_linear_combination_songdata_lyrics
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/python/gs_lyrics_songdata_test.csv"));
+                "data/goldstandard/gs_lyrics_songdata_test.csv"));
 
         System.out.println("*\n*\tEvaluating result\n*");
         // evaluate your result

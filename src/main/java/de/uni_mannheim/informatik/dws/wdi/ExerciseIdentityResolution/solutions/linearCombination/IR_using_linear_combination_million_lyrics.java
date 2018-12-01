@@ -57,7 +57,7 @@ public class IR_using_linear_combination_million_lyrics
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/python/gs_million_lyrics_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_million_lyrics_train.csv"));
 
         // create a matching rule
         LinearCombinationMatchingRule<Music, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
@@ -101,7 +101,7 @@ public class IR_using_linear_combination_million_lyrics
         System.out.println("*\n*\tLoading gold standard\n*");
         MatchingGoldStandard gsTest = new MatchingGoldStandard();
         gsTest.loadFromCSVFile(new File(
-                "data/goldstandard/python/gs_million_lyrics_test.csv"));
+                "data/goldstandard/gs_million_lyrics_test.csv"));
 
         System.out.println("*\n*\tEvaluating result\n*");
         // evaluate your result
@@ -118,8 +118,8 @@ public class IR_using_linear_combination_million_lyrics
         System.out.println(String.format(
                 "F1: %.4f",perfTest.getF1()));
         
-        ErrorAnalysis2 error = new ErrorAnalysis2();
-        error.printFalseNegatives(dataSong, dataArtist, correspondences, gsTest);
-        error.printFalsePositives(correspondences, gsTest);
+        //ErrorAnalysis2 error = new ErrorAnalysis2();
+        //error.printFalseNegatives(dataSong, dataArtist, correspondences, gsTest);
+        //error.printFalsePositives(correspondences, gsTest);
     }
 }

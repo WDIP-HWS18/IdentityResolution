@@ -57,7 +57,7 @@ public class IR_using_linear_combination_songdata_sparql
 
         // load the training set
         MatchingGoldStandard gsTraining = new MatchingGoldStandard();
-        gsTraining.loadFromCSVFile(new File("data/goldstandard/python/gs_songdata_sparql_train.csv"));
+        gsTraining.loadFromCSVFile(new File("data/goldstandard/gs_songdata_sparql_train.csv"));
 
         // create a matching rule
         LinearCombinationMatchingRule<Music, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
@@ -117,9 +117,9 @@ public class IR_using_linear_combination_songdata_sparql
                 "Recall: %.4f",	perfTest.getRecall()));
         System.out.println(String.format(
                 "F1: %.4f",perfTest.getF1()));
-        ErrorAnalysis2 eAnalysis = new ErrorAnalysis2();
-        eAnalysis.printFalseNegatives(dataSong, dataArtist, correspondences, gsTest);
-        eAnalysis.printFalsePositives(correspondences, gsTest);
+        //ErrorAnalysis2 eAnalysis = new ErrorAnalysis2();
+        //eAnalysis.printFalseNegatives(dataSong, dataArtist, correspondences, gsTest);
+        //eAnalysis.printFalsePositives(correspondences, gsTest);
        
     }
 }
